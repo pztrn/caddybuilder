@@ -18,7 +18,7 @@ It is enough to do:
 go get github.com/pztrn/caddybuilder
 ```
 
-**ONLY *NIX SYSTEMS ARE SUPPORTED FOR NOW!**
+**ONLY NIX SYSTEMS ARE SUPPORTED FOR NOW!**
 
 # Running
 
