@@ -5,29 +5,29 @@
 package main
 
 import (
-    // stdlib
-    l "log"
-    "os"
+	// stdlib
+	l "log"
+	"os"
 
-    // local
-    "github.com/pztrn/caddybuilder/builder"
-    "github.com/pztrn/caddybuilder/flagger"
+	// local
+	"github.com/pztrn/caddybuilder/builder"
+	"github.com/pztrn/caddybuilder/flagger"
 )
 
 var (
-    b *builder.Builder
-    flags *flagger.Flagger
-    log *l.Logger
+	b     *builder.Builder
+	flags *flagger.Flagger
+	log   *l.Logger
 )
 
 func main() {
-    // Initializing logger.
-    log = l.New(os.Stdout, "", l.Lmicroseconds | l.LstdFlags)
+	// Initializing logger.
+	log = l.New(os.Stdout, "", l.Lmicroseconds|l.LstdFlags)
 
-    flags = flagger.New()
-    flags.Initialize()
+	flags = flagger.New()
+	flags.Initialize()
 
-    b = builder.New(flags, log)
-    b.Initialize()
-    b.Proceed()
+	b = builder.New(flags, log)
+	b.Initialize()
+	b.Proceed()
 }

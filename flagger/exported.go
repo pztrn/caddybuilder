@@ -5,5 +5,5 @@
 package flagger
 
 func New() *Flagger {
-    return &Flagger{}
+	return &Flagger{}
 }
