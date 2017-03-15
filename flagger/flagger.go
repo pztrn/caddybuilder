@@ -1,6 +1,17 @@
 // Caddybuilder - a friendly tool to build Caddy executable.
 // Copyright (c) 2017, Stanislav N. aka pztrn <pztrn at pztrn dot name>
 //
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 // This package responsible for parsing CLI parameters (also known as
 // flags).
@@ -47,41 +58,24 @@ Exitcodes:
 type Flagger struct {
 	// Build flags - with what plugins Caddybuilder will build Caddy.
 
-	// Build with AWSLAMBDA: https://github.com/coopernurse/caddy-awslambda
 	BUILD_WITH_AWSLAMBDA bool
-	// Build with CORS: https://github.com/captncraig/cors
 	BUILD_WITH_CORS bool
-	// Build with EXPIRES: https://github.com/epicagency/caddy-expires
 	BUILD_WITH_EXPIRES bool
-	// Build with FILEMANAGER: https://github.com/hacdias/caddy-filemanager
 	BUILD_WITH_FILEMANAGER bool
-	// Build with GIT: https://github.com/abiosoft/caddy-git
+	BUILD_WITH_FILTER bool
 	BUILD_WITH_GIT bool
-	// Build with HUGO: https://github.com/hacdias/caddy-hugo
 	BUILD_WITH_HUGO bool
-	// Build with IPFILTER: https://github.com/pyed/ipfilter
 	BUILD_WITH_IPFILTER bool
-	// Build with JSONP: https://github.com/pschlump/caddy-jsonp
 	BUILD_WITH_JSONP bool
-	// Build with JWT: https://github.com/BTBurke/caddy-jwt
 	BUILD_WITH_JWT bool
-	// Build with LOCALE: https://github.com/simia-tech/caddy-locale
 	BUILD_WITH_LOCALE bool
-	// Build with MAILOUT: https://github.com/SchumacherFM/mailout
 	BUILD_WITH_MAILOUT bool
-	// Build with MINIFY: https://github.com/hacdias/caddy-minify
 	BUILD_WITH_MINIFY bool
-	// Build with MULTIPASS: https://github.com/namsral/multipass
 	BUILD_WITH_MULTIPASS bool
-	// Build with PROMETHEUS: https://github.com/miekg/caddy-prometheus
 	BUILD_WITH_PROMETHEUS bool
-	// Build with RATELIMIT: https://github.com/xuqingfeng/caddy-rate-limit
 	BUILD_WITH_RATELIMIT bool
-	// Build with REALIP: https://github.com/captncraig/caddy-realip
 	BUILD_WITH_REALIP bool
-	// Build with SEARCH: https://github.com/pedronasser/caddy-search
 	BUILD_WITH_SEARCH bool
-	// Build with UPLOAD: https://github.com/wmark/caddy.upload
 	BUILD_WITH_UPLOAD bool
 
 	// Output - where binary will be placed.
@@ -101,6 +95,7 @@ func (f *Flagger) Initialize() {
 	flag.BoolVar(&f.BUILD_WITH_CORS, "cors", false, "Build Caddy with CORS plugin")
 	flag.BoolVar(&f.BUILD_WITH_EXPIRES, "expires", false, "Build Caddy with EXPIRES plugin")
 	flag.BoolVar(&f.BUILD_WITH_FILEMANAGER, "filemanager", false, "Build Caddy with FILEMANAGER plugin")
+	flag.BoolVar(&f.BUILD_WITH_FILTER, "filter", false, "Build Caddy with FILTER plugin")
 	flag.BoolVar(&f.BUILD_WITH_GIT, "git", false, "Build Caddy with GIT plugin")
 	flag.BoolVar(&f.BUILD_WITH_HUGO, "hugo", false, "Build Caddy with HUGO plugin")
 	flag.BoolVar(&f.BUILD_WITH_IPFILTER, "ipfilter", false, "Build Caddy with IPFILTER plugin")

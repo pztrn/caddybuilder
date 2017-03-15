@@ -74,7 +74,7 @@ func (b *Builder) Proceed() {
 	// and found paths to all neccessary binaries.
 	// We begin with go get'ing Caddy.
 	log.Print("Starting installing Caddy and plugins...")
-	err1 := b.goGet("github.com/mholt/caddy/caddy")
+	err1 := cw.Execute("go get -d -u github.com/mholt/caddy/caddy")
 	if err1 != nil {
 		log.Print("Error occured while getting Caddy sources:")
 		log.Fatal(err1.Error())
@@ -83,24 +83,10 @@ func (b *Builder) Proceed() {
 	// Install all requested plugins.
 	// For now it is controlled by checking flagger's value, but this
 	// will change.
-	b.installPlugin("awslambda")
-	b.installPlugin("cors")
-	b.installPlugin("expires")
-	b.installPlugin("filemanager")
-	b.installPlugin("git")
-	b.installPlugin("hugo")
-	b.installPlugin("ipfilter")
-	b.installPlugin("jsonp")
-	b.installPlugin("jwt")
-	b.installPlugin("locale")
-	b.installPlugin("mailout")
-	b.installPlugin("minify")
-	b.installPlugin("multipass")
-	b.installPlugin("prometheus")
-	b.installPlugin("ratelimit")
-	b.installPlugin("realip")
-	b.installPlugin("search")
-	b.installPlugin("upload")
+	for i := range pl.PluginsList {
+		handler := pl.PluginsList[i]
+		handler.Install(b.Workspace)
+	}
 
 	// We're set! Build Caddy!
 	log.Print("Building Caddy...")

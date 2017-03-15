@@ -13,30 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// File "exported.go" contains New() call.
-package builder
+// This package contains interface for plugins, which is used by Builder.
+package pluginhandler
 
-import (
-	// stdlib
-	l "log"
-
-	// local
-	"github.com/pztrn/caddybuilder/cmdworker"
-	"github.com/pztrn/caddybuilder/flagger"
-	"github.com/pztrn/caddybuilder/plugins"
-)
-
-var (
-	cw *cmdworker.CmdWorker
-	flags *flagger.Flagger
-	log   *l.Logger
-	pl    *plugins.Plugins
-)
-
-func New(c *cmdworker.CmdWorker, f *flagger.Flagger, l *l.Logger, p *plugins.Plugins) *Builder {
-	cw = c
-	flags = f
-	log = l
-	pl = p
-	return &Builder{}
+type PluginHandler interface {
+	// Get plugin description. Short one :).
+	GetPluginDescription() string
+	// Get plugin documentation URL.
+	GetPluginDocumentationURL() string
+	// Get plugin's import line.
+	// This line will be used to replace plugins initialization placehodler
+	// in Caddy's run.go.
+	GetPluginImportLine() string
+	// Get plugin name.
+	GetPluginName() string
+	// Get plugin's sources URL, for using with Builder.
+	GetPluginSourcesURL() string
+    // Plugin initialization.
+    Initialize()
+    // Installation procedure.
+    Install(workspace_path string)
 }

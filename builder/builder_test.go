@@ -20,15 +20,20 @@ import (
 	"bytes"
 	lt "log"
 	"os"
+	"os/exec"
 	"testing"
 
 	// local
+	"github.com/pztrn/caddybuilder/cmdworker"
 	"github.com/pztrn/caddybuilder/flagger"
+	"github.com/pztrn/caddybuilder/plugins"
 )
 
 var (
 	b *Builder
+	c *cmdworker.CmdWorker
 	f *flagger.Flagger
+	p *plugins.Plugins
 )
 
 // Preparation for tests.
@@ -36,26 +41,33 @@ func prepareToTests() {
 	// Initialize flagger.
 	f = flagger.New()
 	f.DO_NOT_REMOVE_CURRENT_GOPATH = true
-	f.BUILD_OUTPUT = "/tmp/caddybuilder-root/bin/"
-	f.BUILD_WITH_CORS = true
+	f.BUILD_OUTPUT = "/tmp/caddybuilder-gopath/bin/caddy.test"
 	f.BUILD_WITH_REALIP = true
+	f.BUILD_WITH_UPLOAD = true
 
 	// Initialize dummy logger.
 	buf := bytes.NewBuffer([]byte(""))
 	l := lt.New(buf, "", lt.Lmicroseconds|lt.LstdFlags)
 
-	b = New(f, l)
+	// CmdWorker.
+	c = cmdworker.New(l)
+	c.Initialize()
+
+	// Initialize plugins.
+	p = plugins.New(c, f, l)
+	p.Initialize()
+
+	b = New(c, f, l, p)
 	b.Initialize()
 }
 
 // Main test, which will group all other tests.
-func TestBuilderPreparation(t *testing.T) {
+func TestInitialization(t *testing.T) {
 	prepareToTests()
 }
 
 // Test checking for programs existing WITHOUT defined PATH.
 func TestCheckForProgramsWithoutPath(t *testing.T) {
-	prepareToTests()
 	oldPath := os.Getenv("PATH")
 	defer func() { os.Setenv("PATH", oldPath) }()
 	os.Setenv("PATH", "")
@@ -69,7 +81,6 @@ func TestCheckForProgramsWithoutPath(t *testing.T) {
 
 // Test checking for programs existing WITH defined PATH.
 func TestCheckForPrograms(t *testing.T) {
-	prepareToTests()
 	err := b.checkForPrograms()
 	if err != nil {
 		t.Fatal("testCheckForPrograms:", err.Error())
@@ -84,22 +95,43 @@ func TestCheckForPrograms(t *testing.T) {
 	}
 }
 
-// Test go get execution.
-func TestGoGet(t *testing.T) {
-	prepareToTests()
-	b.checkEnvironmentVariables()
-	_ = b.checkForPrograms()
-	b.prepareEnvironment()
-	// We will test with Caddy sources.
-	err := b.goGet("github.com/mholt/caddy")
-	if err != nil {
-		t.Log("Error occured while getting Caddy sources:")
-		t.Fatal(err.Error())
-		t.FailNow()
-	}
-}
-
 // Test Caddy building.
-func TestBuild(t *testing.T) {
-	t.Skip("Temporary skipped")
+// We will call Builder.Proceed and check resulted binary for installed
+// plugins.
+func TestBuilderBuild(t *testing.T) {
+	if !testing.Short() {
+		b.Proceed()
+		// Get installed plugins list.
+		cmd := exec.Command("/tmp/caddybuilder-gopath/bin/caddy.test ", "-plugins")
+    	stdout, _ := cmd.StdoutPipe()
+    	stderr, _ := cmd.StderrPipe()
+    	// Go, go, go!
+    	err := cmd.Start()
+    	if err != nil {
+        	t.Fatalf("Failed to check installed plugins: %s", err.Error())
+    	}
+
+    	stdout_output, _ := ioutil.ReadAll(stdout)
+    	stderr_output, _ := ioutil.ReadAll(stderr)
+    	// Wait until command finishes.
+    	err1 := cmd.Wait()
+    	if err1 != nil {
+        	// This means that some error occured in run time.
+        	t.Log("\tStdout:")
+        	t.Log(string(stdout_output))
+        	t.Log("\tStderr:")
+        	t.Log(string(stderr_output))
+        	t.Fatalf("Error occured while getting list of installed plugins: %s", err1.Error())
+        	t.FailNow()
+    	}
+
+    	stdout_as_string := string(stdout_output)
+    	if !strings.Contains(stdout_as_string, "http.upload") && !strings.Contains(stdout_as_string, "http.realip") {
+    		t.Log("Required plugins wasn't installed! We need upload and realip, got:")
+    		t.Fatal(stdout_as_string)
+    		t.FailNow()
+    	}
+	} else {
+		t.Skip("Test skipped due to -short parameter")
+	}
 }

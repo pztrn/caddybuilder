@@ -13,30 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// File "exported.go" contains New() call.
-package builder
+package cmdworker
 
 import (
-	// stdlib
-	l "log"
-
-	// local
-	"github.com/pztrn/caddybuilder/cmdworker"
-	"github.com/pztrn/caddybuilder/flagger"
-	"github.com/pztrn/caddybuilder/plugins"
+    // stdlib
+    l "log"
 )
 
 var (
-	cw *cmdworker.CmdWorker
-	flags *flagger.Flagger
-	log   *l.Logger
-	pl    *plugins.Plugins
+    log   *l.Logger
 )
 
-func New(c *cmdworker.CmdWorker, f *flagger.Flagger, l *l.Logger, p *plugins.Plugins) *Builder {
-	cw = c
-	flags = f
-	log = l
-	pl = p
-	return &Builder{}
+func New(l *l.Logger) *CmdWorker {
+    log = l
+    return &CmdWorker{}
 }

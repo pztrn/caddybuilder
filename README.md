@@ -47,6 +47,27 @@ branch.
 Every commit should be covered by tests. PRs with new functions and without
 tests are unacceptable and will be rejected.
 
+## Plugins
+
+Take a look into any plugin, they're pretty straightforward. ``context`` and
+``handler`` packages are not plugins, but:
+
+* ``context`` is a structure with some useful things that passed to plugins.
+* ``handler`` is an interface for plugins.
+
+Plugins require no tests to be written, instead it will be tested as part
+of ``plugins`` package. It will test all plugins that have been initialized
+in ``plugins/plugins.go``. If any error arises - ``go test`` will print it
+out.
+
+If plugin require separate test (e.g. it do some requests or doint something
+more that replacing "default replace line" in ``run.go``) - test should be
+written in ``plugins/plugins_test.go`` and named like ``TestNamePluginAction``,
+where:
+
+* ``Name`` - should be replaced with plugin name (e.g. "Realip").
+* ``Action`` - should be replaced to function name or action name.
+
 # Testing
 
 Issue this command to execute all tests:
@@ -55,13 +76,32 @@ Issue this command to execute all tests:
 go test -test.v ./...
 ```
 
-# ToDo
+Full tests execution takes approx. 1-2 minutes. Specify ``-short`` to skip
+tests for ``go get`` execution and Caddy building. This can be useful if
+you're writing a plugin:
+
+```
+go test -test.v -short ./...
+```
+
+# ToDos
+
+## 0.1.0
 
 - [ ] Preserve Caddybuilder's GOPATH between launches.
-- [ ] More perfect plugins subsystem.
-- [ ] Go away from standart ``log`` module.
+- [x] More perfect plugins subsystem.
 - [x] Fix inability to get processes output on error.
+
+## 0.2.0
+
 - [ ] Configuration files with possibility to pin to tag or revision of Caddy
 and/or plugins.
+- [ ] Go away from standart ``log`` module.
+
+## 0.3.0
+
 - [ ] Support for Windows (PRs welcome, I have none of them).
+
+## 0.4.0
+
 - [ ] Switch to native Git library for working with git?

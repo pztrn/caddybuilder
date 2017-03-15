@@ -13,30 +13,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// File "exported.go" contains New() call.
-package builder
+package cmdworker
 
 import (
-	// stdlib
-	l "log"
+    // stdlib
+    "bytes"
+    lt "log"
+    "testing"
 
-	// local
-	"github.com/pztrn/caddybuilder/cmdworker"
-	"github.com/pztrn/caddybuilder/flagger"
-	"github.com/pztrn/caddybuilder/plugins"
+    // local
+    "github.com/pztrn/caddybuilder/flagger"
+    "github.com/pztrn/caddybuilder/plugins"
 )
 
 var (
-	cw *cmdworker.CmdWorker
-	flags *flagger.Flagger
-	log   *l.Logger
-	pl    *plugins.Plugins
+    c *CmdWorker
+    f *flagger.Flagger
+    p *plugins.Plugins
 )
 
-func New(c *cmdworker.CmdWorker, f *flagger.Flagger, l *l.Logger, p *plugins.Plugins) *Builder {
-	cw = c
-	flags = f
-	log = l
-	pl = p
-	return &Builder{}
+// Preparation for tests.
+func prepareToTests() {
+    // Initialize dummy logger.
+    buf := bytes.NewBuffer([]byte(""))
+    l := lt.New(buf, "", lt.Lmicroseconds|lt.LstdFlags)
+
+    c = New(l)
+    c.Initialize()
+}
+
+func TestCmdWorkerPreparation(t *testing.T) {
+    prepareToTests()
+}
+
+// Test command execution.
+func TestExecute(t *testing.T) {
+    err := c.Execute("echo 'success'")
+    if err != nil {
+        t.Fatal(err.Error())
+        t.FailNow()
+    }
 }

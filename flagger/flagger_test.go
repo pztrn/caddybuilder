@@ -26,16 +26,11 @@ var (
 )
 
 // Preparation for tests.
-func prepareToTests() {
+func TestFlaggerPreparation(t *testing.T) {
 	f = &Flagger{}
 }
 
-// Main test, which will group all other tests.
-func TestFlaggerPreparation(t *testing.T) {
-	prepareToTests()
-}
-
-func TestParamsParsing(t *testing.T) {
+func TestFlaggerParamsParsing(t *testing.T) {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
 
