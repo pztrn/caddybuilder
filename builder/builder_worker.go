@@ -36,19 +36,22 @@ func (b *Builder) buildCaddy() error {
 	//os.Chdir(fmt.Sprintf("%s/src/github.com/mholt/caddy/caddy/", b.Workspace))
 	// Prepare command.
 	cmd := exec.Command(b.NeccessaryPrograms["go"], "build", "-a", "-o", flags.BUILD_OUTPUT, "github.com/mholt/caddy/caddy/")
-	//stdout, _ := cmd.StdoutPipe()
+	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
 	// Go, go, go!
 	err := cmd.Start()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Failed to build Caddy: %s", err.Error()))
 	}
+	stdout_output, _ := ioutil.ReadAll(stdout)
+	stderr_output, _ := ioutil.ReadAll(stderr)
 	// Wait until command finishes.
 	err1 := cmd.Wait()
 	if err1 != nil {
 		// This means that some error occured in run time.
-		stderr_output, _ := ioutil.ReadAll(stderr)
-		log.Print("\tCommand output:")
+		log.Print("\tStdout:")
+		log.Print(string(stdout_output))
+		log.Print("\tStderr:")
 		log.Print(string(stderr_output))
 		return errors.New(fmt.Sprintf("Error occured while building Caddy: %s", err1.Error()))
 	}
@@ -63,19 +66,22 @@ func (b *Builder) goGet(path string) error {
 
 	// Prepare command.
 	cmd := exec.Command(b.NeccessaryPrograms["go"], "get", "-d", "-u", path)
-	//stdout, _ := cmd.StdoutPipe()
+	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
 	// Go, go, go!
 	err := cmd.Start()
 	if err != nil {
 		return errors.New(fmt.Sprintf("Failed to start command '%s': %s", command, err.Error()))
 	}
+	stdout_output, _ := ioutil.ReadAll(stdout)
+	stderr_output, _ := ioutil.ReadAll(stderr)
 	// Wait until command finishes.
 	err1 := cmd.Wait()
 	if err1 != nil {
 		// This means that some error occured in run time.
-		stderr_output, _ := ioutil.ReadAll(stderr)
-		log.Print("\tCommand output:")
+		log.Print("\tStdout:")
+		log.Print(string(stdout_output))
+		log.Print("\tStderr:")
 		log.Print(string(stderr_output))
 		return errors.New(fmt.Sprintf("Error occured while executing '%s': %s", command, err1.Error()))
 	}

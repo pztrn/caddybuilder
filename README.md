@@ -60,7 +60,7 @@ go test -test.v ./...
 - [ ] Preserve Caddybuilder's GOPATH between launches.
 - [ ] More perfect plugins subsystem.
 - [ ] Go away from standart ``log`` module.
-- [ ] Fix inability to get processes output on error.
+- [x] Fix inability to get processes output on error.
 - [ ] Configuration files with possibility to pin to tag or revision of Caddy
 and/or plugins.
 - [ ] Support for Windows (PRs welcome, I have none of them).
