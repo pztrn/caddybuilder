@@ -20,6 +20,7 @@ import (
 	// stdlib
 	"errors"
 	"os"
+	"strings"
 )
 
 // Checks environment variables we support.
@@ -61,6 +62,24 @@ func (b *Builder) prepareEnvironment() error {
 	}
 	b.OldGOPATH = current_gopath
 	os.Setenv("GOPATH", b.Workspace)
+
+	// Set PATH. We should include NEW_GOPATH/bin in it. Old path
+	// resides in b.OldPath.
+	// ToDo: make Windows-compatible?
+	b.OldPATH = os.Getenv("PATH")
+	os.Setenv("PATH", b.OldPATH + ":" + b.Workspace + "/bin")
+
+	// Output directory. Recreate if exist.
+	_, err1 := os.Stat(flags.BUILD_OUTPUT)
+	if err1 == nil {
+		// We should not even try to remove /usr/local things.
+		if strings.Contains(flags.BUILD_OUTPUT, "/usr/") {
+			log.Print("Output set somewhere to /usr/, will not delete destination.")
+		} else {
+			os.RemoveAll(flags.BUILD_OUTPUT)
+			os.MkdirAll(flags.BUILD_OUTPUT, os.ModePerm)
+		}
+	}
 
 	return nil
 }

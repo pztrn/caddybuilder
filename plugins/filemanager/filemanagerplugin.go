@@ -90,6 +90,13 @@ func (fp *FilemanagerPlugin) Install(workspace_path string) {
         ctx.Log.Fatalf("Failed to get plugin's sources: %s", err1.Error())
     }
 
+    // We have to run go generate.
+    os.Chdir(fmt.Sprintf("%s/src/%s", workspace_path, fp.GetPluginImportLine()))
+    err2 := ctx.CmdWorker.Execute("go generate")
+    if err2 != nil {
+        ctx.Log.Fatalf("Failed to run go generate: %s", err2.Error())
+    }
+
     // Replace default "This is where other plugins get plugged in (imported)"
     // line with plugin import.
     replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", fp.GetPluginImportLine())

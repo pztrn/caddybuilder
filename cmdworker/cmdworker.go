@@ -28,7 +28,7 @@ type CmdWorker struct {}
 
 // Executes arbitrary command.
 func (cw *CmdWorker) Execute(command string) error {
-    log.Printf("Executing command: %s", command)
+    log.Printf("\tExecuting command: %s", command)
     // First parameter is a command, others are parameters.
     cmd_splitted := strings.Split(command, " ")
 

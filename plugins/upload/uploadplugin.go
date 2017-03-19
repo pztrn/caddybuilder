@@ -65,7 +65,7 @@ func (upp *UploadPlugin) Initialize() {
     upp.pluginDescription = "upload enables you to upload files, such as build artifacts, to your site."
     upp.sourcesUrl = "https://github.com/wmark/caddy.upload"
     upp.documentationUrl = "https://caddyserver.com/docs/upload"
-    upp.importLine = "github.com/wmark/caddy.upload"
+    upp.importLine = "blitznote.com/src/caddy.upload"
 }
 
 // Installation

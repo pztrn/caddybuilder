@@ -74,6 +74,7 @@ func (mup *MultipassPlugin) Install(workspace_path string) {
     if !ctx.Flags.BUILD_WITH_MULTIPASS {
         return
     }
+
     // Path to run.go.
     rungo := filepath.Join(workspace_path, "src", "github.com", "mholt", "caddy", "caddy", "caddymain", "run.go")
     // Read file.
@@ -96,4 +97,10 @@ func (mup *MultipassPlugin) Install(workspace_path string) {
     fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
     // Write file.
     ioutil.WriteFile(rungo, []byte(fh), os.ModePerm)
+
+    // Additional steps required - build multipass binary.
+    err2 := ctx.CmdWorker.Execute(fmt.Sprintf("go build -a -o %s/multipass github.com/namsral/multipass/cmd/multipass", ctx.Flags.BUILD_OUTPUT))
+    if err2 != nil {
+        ctx.Log.Fatalf("Failed to build multipass: %s", err2.Error())
+    }
 }

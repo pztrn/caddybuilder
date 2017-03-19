@@ -17,13 +17,32 @@
 // builder login.
 package builder
 
+import (
+	// stdlib
+	"fmt"
+	"os"
+)
+
 type Builder struct {
 	// Neccessary programs list.
 	NeccessaryPrograms map[string]string
 	// Old GOPATH.
 	OldGOPATH string
+	// Old PATH.
+	OldPATH string
 	// Go's workspace path.
 	Workspace string
+}
+
+// Actually build Caddy binary.
+func (b *Builder) buildCaddy() error {
+	command := fmt.Sprintf("%s build -a -o %s github.com/mholt/caddy/caddy", b.NeccessaryPrograms["go"], flags.BUILD_OUTPUT)
+	err := cw.Execute(command)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Initializes Builder.
@@ -43,6 +62,7 @@ func (b *Builder) Initialize() {
 
 // Prints current Builder configuration.
 func (b *Builder) printConfiguration() {
+	log.Printf("System's path: %s", os.Getenv("PATH"))
 	log.Printf("Go's workspace path: %s", b.Workspace)
 	log.Printf("Caddy binary will be installed at: %s", flags.BUILD_OUTPUT)
 
@@ -65,16 +85,17 @@ func (b *Builder) Proceed() {
 	if err != nil {
 		log.Fatal("Failed to find binary: ", err.Error())
 	}
-	// Print them out.
-	b.printConfiguration()
 	// Prepare environment.
 	b.prepareEnvironment()
+	// Print configuration.
+	b.printConfiguration()
 
 	// From this point we assume that we have prepared GOPATH
 	// and found paths to all neccessary binaries.
 	// We begin with go get'ing Caddy.
 	log.Print("Starting installing Caddy and plugins...")
-	err1 := cw.Execute("go get -d -u github.com/mholt/caddy/caddy")
+	log.Print("Obtaining Caddy sources...")
+	err1 := cw.Execute(fmt.Sprintf("%s get -d -u github.com/mholt/caddy/caddy", b.NeccessaryPrograms["go"]))
 	if err1 != nil {
 		log.Print("Error occured while getting Caddy sources:")
 		log.Fatal(err1.Error())

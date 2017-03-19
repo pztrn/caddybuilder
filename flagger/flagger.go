@@ -114,7 +114,7 @@ func (f *Flagger) Initialize() {
 	flag.BoolVar(&f.DO_NOT_REMOVE_CURRENT_GOPATH, "donotremovegopath", false, "Do not remove previously created GOPATH (improves speed)")
 
 	// Build output path.
-	flag.StringVar(&f.BUILD_OUTPUT, "output", "/usr/local/bin/caddy", "Path where resulting binary will be placed. Specify full path with binary name (e.g. /usr/local/bin/caddy)!")
+	flag.StringVar(&f.BUILD_OUTPUT, "output", "/usr/local/bin/", "Directory where resulting binary will be placed. It will be recreated if already exist.")
 
 	if len(os.Args) == 1 || os.Args[1] == "-h" {
 		flag.PrintDefaults()
