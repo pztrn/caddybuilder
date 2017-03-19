@@ -17,15 +17,15 @@
 package prometheus
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *PrometheusPlugin {
-    ctx = c
-    return &PrometheusPlugin{}
+	ctx = c
+	return &PrometheusPlugin{}
 }

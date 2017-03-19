@@ -17,15 +17,15 @@
 package locale
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *LocalePlugin {
-    ctx = c
-    return &LocalePlugin{}
+	ctx = c
+	return &LocalePlugin{}
 }

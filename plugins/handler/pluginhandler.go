@@ -29,8 +29,8 @@ type PluginHandler interface {
 	GetPluginName() string
 	// Get plugin's sources URL, for using with Builder.
 	GetPluginSourcesURL() string
-    // Plugin initialization.
-    Initialize()
-    // Installation procedure.
-    Install(workspace_path string)
+	// Plugin initialization.
+	Initialize()
+	// Installation procedure.
+	Install(workspace_path string)
 }

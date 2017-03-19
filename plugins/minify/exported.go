@@ -17,15 +17,15 @@
 package minify
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *MinifyPlugin {
-    ctx = c
-    return &MinifyPlugin{}
+	ctx = c
+	return &MinifyPlugin{}
 }

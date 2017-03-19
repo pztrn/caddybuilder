@@ -67,7 +67,7 @@ func (b *Builder) prepareEnvironment() error {
 	// resides in b.OldPath.
 	// ToDo: make Windows-compatible?
 	b.OldPATH = os.Getenv("PATH")
-	os.Setenv("PATH", b.OldPATH + ":" + b.Workspace + "/bin")
+	os.Setenv("PATH", b.OldPATH+":"+b.Workspace+"/bin")
 
 	// Output directory. Recreate if exist.
 	_, err1 := os.Stat(flags.BUILD_OUTPUT)

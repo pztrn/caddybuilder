@@ -17,15 +17,15 @@
 package jsonp
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *JsonpPlugin {
-    ctx = c
-    return &JsonpPlugin{}
+	ctx = c
+	return &JsonpPlugin{}
 }

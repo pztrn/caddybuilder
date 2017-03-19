@@ -16,47 +16,46 @@
 package cmdworker
 
 import (
-    // stdlib
-    "errors"
-    "fmt"
-    "io/ioutil"
-    "os/exec"
-    "strings"
+	// stdlib
+	"errors"
+	"fmt"
+	"io/ioutil"
+	"os/exec"
+	"strings"
 )
 
-type CmdWorker struct {}
+type CmdWorker struct{}
 
 // Executes arbitrary command.
 func (cw *CmdWorker) Execute(command string) error {
-    log.Printf("\tExecuting command: %s", command)
-    // First parameter is a command, others are parameters.
-    cmd_splitted := strings.Split(command, " ")
+	log.Printf("\tExecuting command: %s", command)
+	// First parameter is a command, others are parameters.
+	cmd_splitted := strings.Split(command, " ")
 
-    // Prepare command.
-    cmd := exec.Command(cmd_splitted[0], cmd_splitted[1:]...)
-    stdout, _ := cmd.StdoutPipe()
-    stderr, _ := cmd.StderrPipe()
-    // Go, go, go!
-    err := cmd.Start()
-    if err != nil {
-        return errors.New(fmt.Sprintf("Failed to start command '%s': %s", command, err.Error()))
-    }
-    stdout_output, _ := ioutil.ReadAll(stdout)
-    stderr_output, _ := ioutil.ReadAll(stderr)
-    // Wait until command finishes.
-    err1 := cmd.Wait()
-    if err1 != nil {
-        // This means that some error occured in run time.
-        log.Print("\tStdout:")
-        log.Print(string(stdout_output))
-        log.Print("\tStderr:")
-        log.Print(string(stderr_output))
-        return errors.New(fmt.Sprintf("Error occured while executing '%s': %s", command, err1.Error()))
-    }
+	// Prepare command.
+	cmd := exec.Command(cmd_splitted[0], cmd_splitted[1:]...)
+	stdout, _ := cmd.StdoutPipe()
+	stderr, _ := cmd.StderrPipe()
+	// Go, go, go!
+	err := cmd.Start()
+	if err != nil {
+		return errors.New(fmt.Sprintf("Failed to start command '%s': %s", command, err.Error()))
+	}
+	stdout_output, _ := ioutil.ReadAll(stdout)
+	stderr_output, _ := ioutil.ReadAll(stderr)
+	// Wait until command finishes.
+	err1 := cmd.Wait()
+	if err1 != nil {
+		// This means that some error occured in run time.
+		log.Print("\tStdout:")
+		log.Print(string(stdout_output))
+		log.Print("\tStderr:")
+		log.Print(string(stderr_output))
+		return errors.New(fmt.Sprintf("Error occured while executing '%s': %s", command, err1.Error()))
+	}
 
-    return nil
+	return nil
 }
 
 // Initializes CmdWorker.
 func (cw *CmdWorker) Initialize() {}
-

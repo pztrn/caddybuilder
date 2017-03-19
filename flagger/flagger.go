@@ -58,25 +58,25 @@ Exitcodes:
 type Flagger struct {
 	// Build flags - with what plugins Caddybuilder will build Caddy.
 
-	BUILD_WITH_AWSLAMBDA bool
-	BUILD_WITH_CORS bool
-	BUILD_WITH_EXPIRES bool
+	BUILD_WITH_AWSLAMBDA   bool
+	BUILD_WITH_CORS        bool
+	BUILD_WITH_EXPIRES     bool
 	BUILD_WITH_FILEMANAGER bool
-	BUILD_WITH_FILTER bool
-	BUILD_WITH_GIT bool
-	BUILD_WITH_HUGO bool
-	BUILD_WITH_IPFILTER bool
-	BUILD_WITH_JSONP bool
-	BUILD_WITH_JWT bool
-	BUILD_WITH_LOCALE bool
-	BUILD_WITH_MAILOUT bool
-	BUILD_WITH_MINIFY bool
-	BUILD_WITH_MULTIPASS bool
-	BUILD_WITH_PROMETHEUS bool
-	BUILD_WITH_RATELIMIT bool
-	BUILD_WITH_REALIP bool
-	BUILD_WITH_SEARCH bool
-	BUILD_WITH_UPLOAD bool
+	BUILD_WITH_FILTER      bool
+	BUILD_WITH_GIT         bool
+	BUILD_WITH_HUGO        bool
+	BUILD_WITH_IPFILTER    bool
+	BUILD_WITH_JSONP       bool
+	BUILD_WITH_JWT         bool
+	BUILD_WITH_LOCALE      bool
+	BUILD_WITH_MAILOUT     bool
+	BUILD_WITH_MINIFY      bool
+	BUILD_WITH_MULTIPASS   bool
+	BUILD_WITH_PROMETHEUS  bool
+	BUILD_WITH_RATELIMIT   bool
+	BUILD_WITH_REALIP      bool
+	BUILD_WITH_SEARCH      bool
+	BUILD_WITH_UPLOAD      bool
 
 	// Output - where binary will be placed.
 	BUILD_OUTPUT string

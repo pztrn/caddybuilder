@@ -21,19 +21,19 @@ import (
 	// stdlib
 	"log"
 
-    // local
-    "github.com/pztrn/caddybuilder/cmdworker"
-    "github.com/pztrn/caddybuilder/flagger"
+	// local
+	"github.com/pztrn/caddybuilder/cmdworker"
+	"github.com/pztrn/caddybuilder/flagger"
 )
 
 type PluginContext struct {
-    CmdWorker *cmdworker.CmdWorker
-    Flags *flagger.Flagger
-	Log *log.Logger
+	CmdWorker *cmdworker.CmdWorker
+	Flags     *flagger.Flagger
+	Log       *log.Logger
 }
 
 func (pc *PluginContext) Initialize(c *cmdworker.CmdWorker, f *flagger.Flagger, l *log.Logger) {
-    pc.CmdWorker = c
-    pc.Flags = f
+	pc.CmdWorker = c
+	pc.Flags = f
 	pc.Log = l
 }

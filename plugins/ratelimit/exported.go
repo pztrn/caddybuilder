@@ -17,15 +17,15 @@
 package ratelimit
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *RatelimitPlugin {
-    ctx = c
-    return &RatelimitPlugin{}
+	ctx = c
+	return &RatelimitPlugin{}
 }

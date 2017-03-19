@@ -16,15 +16,15 @@
 package cmdworker
 
 import (
-    // stdlib
-    l "log"
+	// stdlib
+	l "log"
 )
 
 var (
-    log   *l.Logger
+	log *l.Logger
 )
 
 func New(l *l.Logger) *CmdWorker {
-    log = l
-    return &CmdWorker{}
+	log = l
+	return &CmdWorker{}
 }

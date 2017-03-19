@@ -16,84 +16,84 @@
 package jwt
 
 import (
-    // stdlib
-    "fmt"
-    "io/ioutil"
-    "os"
-    "path/filepath"
-    "strings"
+	// stdlib
+	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 type JwtPlugin struct {
-    documentationUrl  string
-    importLine        string
-    pluginDescription string
-    pluginName        string
-    sourcesUrl        string
+	documentationUrl  string
+	importLine        string
+	pluginDescription string
+	pluginName        string
+	sourcesUrl        string
 }
 
 // Get plugin description. Short one :).
 func (jp *JwtPlugin) GetPluginDescription() string {
-    return jp.pluginDescription
+	return jp.pluginDescription
 }
 
 // Get plugin documentation URL.
 func (jp *JwtPlugin) GetPluginDocumentationURL() string {
-    return jp.documentationUrl
+	return jp.documentationUrl
 }
 
 // Get plugin's import line.
 // This line will be used to replace plugins initialization placehodler
 // in Caddy's run.go.
 func (jp *JwtPlugin) GetPluginImportLine() string {
-    return jp.importLine
+	return jp.importLine
 }
 
 // Get plugin name.
 func (jp *JwtPlugin) GetPluginName() string {
-    return jp.pluginName
+	return jp.pluginName
 }
 
 // Get plugin's sources URL, for using with Builder.
 func (jp *JwtPlugin) GetPluginSourcesURL() string {
-    return jp.sourcesUrl
+	return jp.sourcesUrl
 }
 
 // Plugin initialization.
 func (jp *JwtPlugin) Initialize() {
-    jp.pluginName = "jwt"
-    jp.pluginDescription = "This middleware implements an authorization layer based on JSON Web Tokens (JWT)."
-    jp.sourcesUrl = "https://github.com/BTBurke/caddy-jwt"
-    jp.documentationUrl = "https://caddyserver.com/docs/jwt"
-    jp.importLine = "github.com/BTBurke/caddy-jwt"
+	jp.pluginName = "jwt"
+	jp.pluginDescription = "This middleware implements an authorization layer based on JSON Web Tokens (JWT)."
+	jp.sourcesUrl = "https://github.com/BTBurke/caddy-jwt"
+	jp.documentationUrl = "https://caddyserver.com/docs/jwt"
+	jp.importLine = "github.com/BTBurke/caddy-jwt"
 }
 
 // Installation
 func (jp *JwtPlugin) Install(workspace_path string) {
-    // Do nothing if user don't want to install this plugin.
-    if !ctx.Flags.BUILD_WITH_JWT {
-        return
-    }
-    // Path to run.go.
-    rungo := filepath.Join(workspace_path, "src", "github.com", "mholt", "caddy", "caddy", "caddymain", "run.go")
-    // Read file.
-    fh_bytes, err := ioutil.ReadFile(rungo)
-    if err != nil {
-        ctx.Log.Fatalf("Cannot open run.go: %s", err.Error())
-    }
-    fh := string(fh_bytes)
+	// Do nothing if user don't want to install this plugin.
+	if !ctx.Flags.BUILD_WITH_JWT {
+		return
+	}
+	// Path to run.go.
+	rungo := filepath.Join(workspace_path, "src", "github.com", "mholt", "caddy", "caddy", "caddymain", "run.go")
+	// Read file.
+	fh_bytes, err := ioutil.ReadFile(rungo)
+	if err != nil {
+		ctx.Log.Fatalf("Cannot open run.go: %s", err.Error())
+	}
+	fh := string(fh_bytes)
 
-    ctx.Log.Printf("Installing plugin: %s", jp.GetPluginName())
+	ctx.Log.Printf("Installing plugin: %s", jp.GetPluginName())
 
-    err1 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", jp.GetPluginImportLine()))
-    if err1 != nil {
-        ctx.Log.Fatalf("Failed to get plugin's sources: %s", err1.Error())
-    }
+	err1 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", jp.GetPluginImportLine()))
+	if err1 != nil {
+		ctx.Log.Fatalf("Failed to get plugin's sources: %s", err1.Error())
+	}
 
-    // Replace default "This is where other plugins get plugged in (imported)"
-    // line with plugin import.
-    replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", jp.GetPluginImportLine())
-    fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
-    // Write file.
-    ioutil.WriteFile(rungo, []byte(fh), os.ModePerm)
+	// Replace default "This is where other plugins get plugged in (imported)"
+	// line with plugin import.
+	replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", jp.GetPluginImportLine())
+	fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
+	// Write file.
+	ioutil.WriteFile(rungo, []byte(fh), os.ModePerm)
 }

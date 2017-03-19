@@ -16,41 +16,41 @@
 package cmdworker
 
 import (
-    // stdlib
-    "bytes"
-    lt "log"
-    "testing"
+	// stdlib
+	"bytes"
+	lt "log"
+	"testing"
 
-    // local
-    "github.com/pztrn/caddybuilder/flagger"
-    "github.com/pztrn/caddybuilder/plugins"
+	// local
+	"github.com/pztrn/caddybuilder/flagger"
+	"github.com/pztrn/caddybuilder/plugins"
 )
 
 var (
-    c *CmdWorker
-    f *flagger.Flagger
-    p *plugins.Plugins
+	c *CmdWorker
+	f *flagger.Flagger
+	p *plugins.Plugins
 )
 
 // Preparation for tests.
 func prepareToTests() {
-    // Initialize dummy logger.
-    buf := bytes.NewBuffer([]byte(""))
-    l := lt.New(buf, "", lt.Lmicroseconds|lt.LstdFlags)
+	// Initialize dummy logger.
+	buf := bytes.NewBuffer([]byte(""))
+	l := lt.New(buf, "", lt.Lmicroseconds|lt.LstdFlags)
 
-    c = New(l)
-    c.Initialize()
+	c = New(l)
+	c.Initialize()
 }
 
 func TestCmdWorkerPreparation(t *testing.T) {
-    prepareToTests()
+	prepareToTests()
 }
 
 // Test command execution.
 func TestExecute(t *testing.T) {
-    err := c.Execute("echo 'success'")
-    if err != nil {
-        t.Fatal(err.Error())
-        t.FailNow()
-    }
+	err := c.Execute("echo 'success'")
+	if err != nil {
+		t.Fatal(err.Error())
+		t.FailNow()
+	}
 }

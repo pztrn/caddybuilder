@@ -103,34 +103,34 @@ func TestBuilderBuild(t *testing.T) {
 		b.Proceed()
 		// Get installed plugins list.
 		cmd := exec.Command("/tmp/caddybuilder-gopath/bin/caddy.test ", "-plugins")
-    	stdout, _ := cmd.StdoutPipe()
-    	stderr, _ := cmd.StderrPipe()
-    	// Go, go, go!
-    	err := cmd.Start()
-    	if err != nil {
-        	t.Fatalf("Failed to check installed plugins: %s", err.Error())
-    	}
+		stdout, _ := cmd.StdoutPipe()
+		stderr, _ := cmd.StderrPipe()
+		// Go, go, go!
+		err := cmd.Start()
+		if err != nil {
+			t.Fatalf("Failed to check installed plugins: %s", err.Error())
+		}
 
-    	stdout_output, _ := ioutil.ReadAll(stdout)
-    	stderr_output, _ := ioutil.ReadAll(stderr)
-    	// Wait until command finishes.
-    	err1 := cmd.Wait()
-    	if err1 != nil {
-        	// This means that some error occured in run time.
-        	t.Log("\tStdout:")
-        	t.Log(string(stdout_output))
-        	t.Log("\tStderr:")
-        	t.Log(string(stderr_output))
-        	t.Fatalf("Error occured while getting list of installed plugins: %s", err1.Error())
-        	t.FailNow()
-    	}
+		stdout_output, _ := ioutil.ReadAll(stdout)
+		stderr_output, _ := ioutil.ReadAll(stderr)
+		// Wait until command finishes.
+		err1 := cmd.Wait()
+		if err1 != nil {
+			// This means that some error occured in run time.
+			t.Log("\tStdout:")
+			t.Log(string(stdout_output))
+			t.Log("\tStderr:")
+			t.Log(string(stderr_output))
+			t.Fatalf("Error occured while getting list of installed plugins: %s", err1.Error())
+			t.FailNow()
+		}
 
-    	stdout_as_string := string(stdout_output)
-    	if !strings.Contains(stdout_as_string, "http.upload") && !strings.Contains(stdout_as_string, "http.realip") {
-    		t.Log("Required plugins wasn't installed! We need upload and realip, got:")
-    		t.Fatal(stdout_as_string)
-    		t.FailNow()
-    	}
+		stdout_as_string := string(stdout_output)
+		if !strings.Contains(stdout_as_string, "http.upload") && !strings.Contains(stdout_as_string, "http.realip") {
+			t.Log("Required plugins wasn't installed! We need upload and realip, got:")
+			t.Fatal(stdout_as_string)
+			t.FailNow()
+		}
 	} else {
 		t.Skip("Test skipped due to -short parameter")
 	}

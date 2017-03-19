@@ -17,15 +17,15 @@
 package upload
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *UploadPlugin {
-    ctx = c
-    return &UploadPlugin{}
+	ctx = c
+	return &UploadPlugin{}
 }

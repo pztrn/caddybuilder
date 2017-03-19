@@ -21,20 +21,20 @@ import (
 	// stdlib
 	l "log"
 
-    // local
-    "github.com/pztrn/caddybuilder/cmdworker"
-    "github.com/pztrn/caddybuilder/flagger"
+	// local
+	"github.com/pztrn/caddybuilder/cmdworker"
+	"github.com/pztrn/caddybuilder/flagger"
 )
 
 var (
-    cw *cmdworker.CmdWorker
-    flags *flagger.Flagger
-	log *l.Logger
+	cw    *cmdworker.CmdWorker
+	flags *flagger.Flagger
+	log   *l.Logger
 )
 
 func New(c *cmdworker.CmdWorker, f *flagger.Flagger, lg *l.Logger) *Plugins {
-    cw = c
-    flags = f
+	cw = c
+	flags = f
 	log = lg
 	return &Plugins{}
 }

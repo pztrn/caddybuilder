@@ -30,7 +30,7 @@ import (
 
 var (
 	b     *builder.Builder
-	cw *cmdworker.CmdWorker
+	cw    *cmdworker.CmdWorker
 	flags *flagger.Flagger
 	log   *l.Logger
 	pl    *plugins.Plugins

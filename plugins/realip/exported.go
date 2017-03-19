@@ -17,15 +17,15 @@
 package realip
 
 import (
-    // local
-    "github.com/pztrn/caddybuilder/plugins/context"
+	// local
+	"github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-    ctx *plugincontext.PluginContext
+	ctx *plugincontext.PluginContext
 )
 
 func New(c *plugincontext.PluginContext) *RealipPlugin {
-    ctx = c
-    return &RealipPlugin{}
+	ctx = c
+	return &RealipPlugin{}
 }
