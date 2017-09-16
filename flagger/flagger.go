@@ -58,12 +58,20 @@ Exitcodes:
 type Flagger struct {
 	// Build flags - with what plugins Caddybuilder will build Caddy.
 
+	BUILD_WITH_AUTHZ       bool
+	BUILD_WITH_AWSES       bool
 	BUILD_WITH_AWSLAMBDA   bool
+	BUILD_WITH_CACHE       bool
+	BUILD_WITH_CGI         bool
 	BUILD_WITH_CORS        bool
+	BUILD_WITH_DATADOG     bool
 	BUILD_WITH_EXPIRES     bool
 	BUILD_WITH_FILEMANAGER bool
 	BUILD_WITH_FILTER      bool
+	BUILD_WITH_FORWARDPROXY bool
 	BUILD_WITH_GIT         bool
+	BUILD_WITH_GOPKG       bool
+	BUILD_WITH_GRPC        bool
 	BUILD_WITH_HUGO        bool
 	BUILD_WITH_IPFILTER    bool
 	BUILD_WITH_JSONP       bool
@@ -71,12 +79,15 @@ type Flagger struct {
 	BUILD_WITH_LOCALE      bool
 	BUILD_WITH_MAILOUT     bool
 	BUILD_WITH_MINIFY      bool
-	BUILD_WITH_MULTIPASS   bool
+	BUILD_WITH_NOBOTS      bool
 	BUILD_WITH_PROMETHEUS  bool
+	BUILD_WITH_PROXYPROTOCOL bool
 	BUILD_WITH_RATELIMIT   bool
 	BUILD_WITH_REALIP      bool
-	BUILD_WITH_SEARCH      bool
+	BUILD_WITH_REAUTH      bool
+	BUILD_WITH_RESTIC      bool
 	BUILD_WITH_UPLOAD      bool
+	BUILD_WITH_WEBDAV      bool
 
 	// Output - where binary will be placed.
 	BUILD_OUTPUT string
@@ -91,25 +102,35 @@ func (f *Flagger) Initialize() {
 		fmt.Println(HELP_STRING)
 	}
 
+	flag.BoolVar(&f.BUILD_WITH_AUTHZ, "authz", false, "Build Caddy with AUTHZ plugin")
+	flag.BoolVar(&f.BUILD_WITH_AUTHZ, "awses", false, "Build Caddy with AWSES plugin")
 	flag.BoolVar(&f.BUILD_WITH_AWSLAMBDA, "awslambda", false, "Build Caddy with AWSLAMBDA plugin")
+	flag.BoolVar(&f.BUILD_WITH_CACHE, "cache", false, "Build Caddy with CACHE plugin")
+	flag.BoolVar(&f.BUILD_WITH_CGI, "cgi", false, "Build Caddy with CGI plugin")
 	flag.BoolVar(&f.BUILD_WITH_CORS, "cors", false, "Build Caddy with CORS plugin")
+	flag.BoolVar(&f.BUILD_WITH_DATADOG, "datadog", false, "Build Caddy with DATADOG plugin")
 	flag.BoolVar(&f.BUILD_WITH_EXPIRES, "expires", false, "Build Caddy with EXPIRES plugin")
-	flag.BoolVar(&f.BUILD_WITH_FILEMANAGER, "filemanager", false, "Build Caddy with FILEMANAGER plugin")
+	flag.BoolVar(&f.BUILD_WITH_FILEMANAGER, "filemanager", false, "Build Caddy with FILEMANAGER plugin. Includes HUGO and JEKYLL.")
 	flag.BoolVar(&f.BUILD_WITH_FILTER, "filter", false, "Build Caddy with FILTER plugin")
+	flag.BoolVar(&f.BUILD_WITH_FORWARDPROXY, "forwardproxy", false, "Build Caddy with FORWARDPROXY plugin")
 	flag.BoolVar(&f.BUILD_WITH_GIT, "git", false, "Build Caddy with GIT plugin")
-	flag.BoolVar(&f.BUILD_WITH_HUGO, "hugo", false, "Build Caddy with HUGO plugin")
+	flag.BoolVar(&f.BUILD_WITH_GOPKG, "gopkg", false, "Build Caddy with GOPKG plugin")
+	flag.BoolVar(&f.BUILD_WITH_GRPC, "grpc", false, "Build Caddy with GRPC plugin")
 	flag.BoolVar(&f.BUILD_WITH_IPFILTER, "ipfilter", false, "Build Caddy with IPFILTER plugin")
 	flag.BoolVar(&f.BUILD_WITH_JSONP, "jsonp", false, "Build Caddy with JSONP plugin")
 	flag.BoolVar(&f.BUILD_WITH_JWT, "jwt", false, "Build Caddy with JWT plugin")
 	flag.BoolVar(&f.BUILD_WITH_LOCALE, "locale", false, "Build Caddy with LOCALE plugin")
 	flag.BoolVar(&f.BUILD_WITH_MAILOUT, "mailout", false, "Build Caddy with MAILOUT plugin")
 	flag.BoolVar(&f.BUILD_WITH_MINIFY, "minify", false, "Build Caddy with MINIFY plugin")
-	flag.BoolVar(&f.BUILD_WITH_MULTIPASS, "multipass", false, "Build Caddy with MULTIPASS plugin")
+	flag.BoolVar(&f.BUILD_WITH_NOBOTS, "nobots", false, "Build Caddy with NOBOTS plugin")
 	flag.BoolVar(&f.BUILD_WITH_PROMETHEUS, "prometheus", false, "Build Caddy with PROMETHEUS plugin")
+	flag.BoolVar(&f.BUILD_WITH_PROXYPROTOCOL, "proxyprotocol", false, "Build Caddy with PROXYPROTOCOL plugin")
 	flag.BoolVar(&f.BUILD_WITH_RATELIMIT, "ratelimit", false, "Build Caddy with RATELIMIT plugin")
 	flag.BoolVar(&f.BUILD_WITH_REALIP, "realip", false, "Build Caddy with REALIP plugin")
-	flag.BoolVar(&f.BUILD_WITH_SEARCH, "search", false, "Build Caddy with SEARCH plugin")
+	flag.BoolVar(&f.BUILD_WITH_REAUTH, "reauth", false, "Build Caddy with REAUTH plugin")
+	flag.BoolVar(&f.BUILD_WITH_RESTIC, "restic", false, "Build Caddy with RESTIC plugin")
 	flag.BoolVar(&f.BUILD_WITH_UPLOAD, "upload", false, "Build Caddy with UPLOAD plugin")
+	flag.BoolVar(&f.BUILD_WITH_WEBDAV, "webdav", false, "Build Caddy with WEBDAV plugin")
 
 	flag.BoolVar(&f.DO_NOT_REMOVE_CURRENT_GOPATH, "donotremovegopath", false, "Do not remove previously created GOPATH (improves speed)")
 

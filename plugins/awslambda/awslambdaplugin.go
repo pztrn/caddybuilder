@@ -64,7 +64,7 @@ func (alp *AwsLambdaPlugin) Initialize() {
 	alp.pluginName = "awslambda"
 	alp.pluginDescription = "awslambda proxies requests to AWS Lambda functions using the AWS Lambda Invoke operation. It provides an alternative to AWS API Gateway and provides a simple way to declaratively proxy requests to a set of Lambda functions without per-function configuration."
 	alp.sourcesUrl = "https://github.com/coopernurse/caddy-awslambda"
-	alp.documentationUrl = "https://caddyserver.com/docs/awslambda"
+	alp.documentationUrl = "https://caddyserver.com/docs/http.awslambda"
 	alp.importLine = "github.com/coopernurse/caddy-awslambda"
 }
 

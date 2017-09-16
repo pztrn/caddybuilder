@@ -13,19 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This package contains HUGO plugin.
-package hugo
+// This package contains AWSLAMBDA plugin.
+package cache
 
 import (
-	// local
-	"github.com/pztrn/caddybuilder/plugins/context"
+    // local
+    "github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-	ctx *plugincontext.PluginContext
+    ctx *plugincontext.PluginContext
 )
 
-func New(c *plugincontext.PluginContext) *HugoPlugin {
-	ctx = c
-	return &HugoPlugin{}
+func New(c *plugincontext.PluginContext) *CachePlugin {
+    ctx = c
+    return &CachePlugin{}
 }

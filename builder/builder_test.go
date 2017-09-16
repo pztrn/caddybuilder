@@ -18,9 +18,11 @@ package builder
 import (
 	// stdlib
 	"bytes"
+	"io/ioutil"
 	lt "log"
 	"os"
 	"os/exec"
+	"strings"
 	"testing"
 
 	// local
@@ -100,6 +102,7 @@ func TestCheckForPrograms(t *testing.T) {
 // plugins.
 func TestBuilderBuild(t *testing.T) {
 	if !testing.Short() {
+		t.Log("Building Caddy...")
 		b.Proceed()
 		// Get installed plugins list.
 		cmd := exec.Command("/tmp/caddybuilder-gopath/bin/caddy.test ", "-plugins")

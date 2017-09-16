@@ -24,25 +24,35 @@ import (
 	"github.com/pztrn/caddybuilder/plugins/handler"
 
 	// plugins
+	"github.com/pztrn/caddybuilder/plugins/authz"
+	"github.com/pztrn/caddybuilder/plugins/awses"
 	"github.com/pztrn/caddybuilder/plugins/awslambda"
+	"github.com/pztrn/caddybuilder/plugins/cache"
+	"github.com/pztrn/caddybuilder/plugins/cgi"
 	"github.com/pztrn/caddybuilder/plugins/cors"
+	"github.com/pztrn/caddybuilder/plugins/datadog"
 	"github.com/pztrn/caddybuilder/plugins/expires"
 	"github.com/pztrn/caddybuilder/plugins/filemanager"
 	"github.com/pztrn/caddybuilder/plugins/filter"
+	"github.com/pztrn/caddybuilder/plugins/forwardproxy"
 	"github.com/pztrn/caddybuilder/plugins/git"
-	"github.com/pztrn/caddybuilder/plugins/hugo"
+	"github.com/pztrn/caddybuilder/plugins/gopkg"
+	"github.com/pztrn/caddybuilder/plugins/grpc"
 	"github.com/pztrn/caddybuilder/plugins/ipfilter"
 	"github.com/pztrn/caddybuilder/plugins/jsonp"
 	"github.com/pztrn/caddybuilder/plugins/jwt"
 	"github.com/pztrn/caddybuilder/plugins/locale"
 	"github.com/pztrn/caddybuilder/plugins/mailout"
 	"github.com/pztrn/caddybuilder/plugins/minify"
-	"github.com/pztrn/caddybuilder/plugins/multipass"
+	"github.com/pztrn/caddybuilder/plugins/nobots"
 	"github.com/pztrn/caddybuilder/plugins/prometheus"
+	"github.com/pztrn/caddybuilder/plugins/proxyprotocol"
 	"github.com/pztrn/caddybuilder/plugins/ratelimit"
 	"github.com/pztrn/caddybuilder/plugins/realip"
-	"github.com/pztrn/caddybuilder/plugins/search"
+	"github.com/pztrn/caddybuilder/plugins/reauth"
+	"github.com/pztrn/caddybuilder/plugins/restic"
 	"github.com/pztrn/caddybuilder/plugins/upload"
+	"github.com/pztrn/caddybuilder/plugins/webdav"
 )
 
 type Plugins struct {
@@ -73,15 +83,40 @@ func (p *Plugins) initializePluginContext() {
 func (p *Plugins) initializePlugins() {
 	log.Print("Initializing plugins...")
 
+	authz_raw := authz.New(p.pluginContext)
+	authz_interface := pluginhandler.PluginHandler(authz_raw)
+	authz_interface.Initialize()
+	p.PluginsList[authz_interface.GetPluginName()] = authz_interface
+
+	awses_raw := awses.New(p.pluginContext)
+	awses_interface := pluginhandler.PluginHandler(awses_raw)
+	awses_interface.Initialize()
+	p.PluginsList[awses_interface.GetPluginName()] = awses_interface
+
 	awslambda_raw := awslambda.New(p.pluginContext)
 	awslambda_interface := pluginhandler.PluginHandler(awslambda_raw)
 	awslambda_interface.Initialize()
 	p.PluginsList[awslambda_interface.GetPluginName()] = awslambda_interface
 
+	cache_raw := cache.New(p.pluginContext)
+	cache_interface := pluginhandler.PluginHandler(cache_raw)
+	cache_interface.Initialize()
+	p.PluginsList[cache_interface.GetPluginName()] = cache_interface
+
+	cgi_raw := cgi.New(p.pluginContext)
+	cgi_interface := pluginhandler.PluginHandler(cgi_raw)
+	cgi_interface.Initialize()
+	p.PluginsList[cgi_interface.GetPluginName()] = cgi_interface
+
 	cors_raw := cors.New(p.pluginContext)
 	cors_interface := pluginhandler.PluginHandler(cors_raw)
 	cors_interface.Initialize()
 	p.PluginsList[cors_interface.GetPluginName()] = cors_interface
+
+	datadog_raw := datadog.New(p.pluginContext)
+	datadog_interface := pluginhandler.PluginHandler(datadog_raw)
+	datadog_interface.Initialize()
+	p.PluginsList[datadog_interface.GetPluginName()] = datadog_interface
 
 	expires_raw := expires.New(p.pluginContext)
 	expires_interface := pluginhandler.PluginHandler(expires_raw)
@@ -98,15 +133,25 @@ func (p *Plugins) initializePlugins() {
 	filter_interface.Initialize()
 	p.PluginsList[filter_interface.GetPluginName()] = filter_interface
 
+	forwardproxy_raw := forwardproxy.New(p.pluginContext)
+	forwardproxy_interface := pluginhandler.PluginHandler(forwardproxy_raw)
+	forwardproxy_interface.Initialize()
+	p.PluginsList[forwardproxy_interface.GetPluginName()] = forwardproxy_interface
+
 	git_raw := git.New(p.pluginContext)
 	git_interface := pluginhandler.PluginHandler(git_raw)
 	git_interface.Initialize()
 	p.PluginsList[git_interface.GetPluginName()] = git_interface
 
-	hugo_raw := hugo.New(p.pluginContext)
-	hugo_interface := pluginhandler.PluginHandler(hugo_raw)
-	hugo_interface.Initialize()
-	p.PluginsList[hugo_interface.GetPluginName()] = hugo_interface
+	gopkg_raw := gopkg.New(p.pluginContext)
+	gopkg_interface := pluginhandler.PluginHandler(gopkg_raw)
+	gopkg_interface.Initialize()
+	p.PluginsList[gopkg_interface.GetPluginName()] = gopkg_interface
+
+	grpc_raw := grpc.New(p.pluginContext)
+	grpc_interface := pluginhandler.PluginHandler(grpc_raw)
+	grpc_interface.Initialize()
+	p.PluginsList[grpc_interface.GetPluginName()] = grpc_interface
 
 	ipfilter_raw := ipfilter.New(p.pluginContext)
 	ipfilter_interface := pluginhandler.PluginHandler(ipfilter_raw)
@@ -138,15 +183,20 @@ func (p *Plugins) initializePlugins() {
 	minify_interface.Initialize()
 	p.PluginsList[minify_interface.GetPluginName()] = minify_interface
 
-	multipass_raw := multipass.New(p.pluginContext)
-	multipass_interface := pluginhandler.PluginHandler(multipass_raw)
-	multipass_interface.Initialize()
-	p.PluginsList[multipass_interface.GetPluginName()] = multipass_interface
+	nobots_raw := nobots.New(p.pluginContext)
+	nobots_interface := pluginhandler.PluginHandler(nobots_raw)
+	nobots_interface.Initialize()
+	p.PluginsList[nobots_interface.GetPluginName()] = nobots_interface
 
 	prometheus_raw := prometheus.New(p.pluginContext)
 	prometheus_interface := pluginhandler.PluginHandler(prometheus_raw)
 	prometheus_interface.Initialize()
 	p.PluginsList[prometheus_interface.GetPluginName()] = prometheus_interface
+
+	proxyprotocol_raw := proxyprotocol.New(p.pluginContext)
+	proxyprotocol_interface := pluginhandler.PluginHandler(proxyprotocol_raw)
+	proxyprotocol_interface.Initialize()
+	p.PluginsList[proxyprotocol_interface.GetPluginName()] = proxyprotocol_interface
 
 	ratelimit_raw := ratelimit.New(p.pluginContext)
 	ratelimit_interface := pluginhandler.PluginHandler(ratelimit_raw)
@@ -158,13 +208,23 @@ func (p *Plugins) initializePlugins() {
 	realip_interface.Initialize()
 	p.PluginsList[realip_interface.GetPluginName()] = realip_interface
 
-	search_raw := search.New(p.pluginContext)
-	search_interface := pluginhandler.PluginHandler(search_raw)
-	search_interface.Initialize()
-	p.PluginsList[search_interface.GetPluginName()] = search_interface
+	reauth_raw := reauth.New(p.pluginContext)
+	reauth_interface := pluginhandler.PluginHandler(reauth_raw)
+	reauth_interface.Initialize()
+	p.PluginsList[reauth_interface.GetPluginName()] = reauth_interface
+
+	restic_raw := restic.New(p.pluginContext)
+	restic_interface := pluginhandler.PluginHandler(restic_raw)
+	restic_interface.Initialize()
+	p.PluginsList[restic_interface.GetPluginName()] = restic_interface
 
 	upload_raw := upload.New(p.pluginContext)
 	upload_interface := pluginhandler.PluginHandler(upload_raw)
 	upload_interface.Initialize()
 	p.PluginsList[upload_interface.GetPluginName()] = upload_interface
+
+	webdav_raw := webdav.New(p.pluginContext)
+	webdav_interface := pluginhandler.PluginHandler(webdav_raw)
+	webdav_interface.Initialize()
+	p.PluginsList[webdav_interface.GetPluginName()] = webdav_interface
 }

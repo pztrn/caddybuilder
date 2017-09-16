@@ -13,19 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This package contains MINIFY plugin.
-package multipass
+// This package contains CORS plugin.
+package gopkg
 
 import (
-	// local
-	"github.com/pztrn/caddybuilder/plugins/context"
+    // local
+    "github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-	ctx *plugincontext.PluginContext
+    ctx *plugincontext.PluginContext
 )
 
-func New(c *plugincontext.PluginContext) *MultipassPlugin {
-	ctx = c
-	return &MultipassPlugin{}
+func New(c *plugincontext.PluginContext) *GopkgPlugin {
+    ctx = c
+    return &GopkgPlugin{}
 }

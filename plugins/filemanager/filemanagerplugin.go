@@ -63,9 +63,9 @@ func (fp *FilemanagerPlugin) GetPluginSourcesURL() string {
 func (fp *FilemanagerPlugin) Initialize() {
 	fp.pluginName = "filemanager"
 	fp.pluginDescription = "filemanager is an extension based on browse middleware. It provides a file managing interface within the specified directory and it can be used to upload, delete, preview and rename your files within that directory."
-	fp.sourcesUrl = "https://github.com/hacdias/caddy-filemanager"
-	fp.documentationUrl = "https://caddyserver.com/docs/filemanager"
-	fp.importLine = "github.com/hacdias/caddy-filemanager"
+	fp.sourcesUrl = "https://github.com/hacdias/filemanager"
+	fp.documentationUrl = "https://caddyserver.com/docs/http.filemanager"
+	fp.importLine = "github.com/hacdias/filemanager"
 }
 
 // Installation

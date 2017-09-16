@@ -14,18 +14,18 @@
 // limitations under the License.
 
 // This package contains MINIFY plugin.
-package search
+package reauth
 
 import (
-	// local
-	"github.com/pztrn/caddybuilder/plugins/context"
+    // local
+    "github.com/pztrn/caddybuilder/plugins/context"
 )
 
 var (
-	ctx *plugincontext.PluginContext
+    ctx *plugincontext.PluginContext
 )
 
-func New(c *plugincontext.PluginContext) *SearchPlugin {
-	ctx = c
-	return &SearchPlugin{}
+func New(c *plugincontext.PluginContext) *ReauthPlugin {
+    ctx = c
+    return &ReauthPlugin{}
 }

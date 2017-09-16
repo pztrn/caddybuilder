@@ -34,10 +34,10 @@ func TestFlaggerParamsParsing(t *testing.T) {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
 
-	os.Args = []string{"caddybuilder", "-cors", "-realip", "-search"}
+	os.Args = []string{"caddybuilder", "-cors", "-realip", "-webdav"}
 	f.Initialize()
 
-	if f.BUILD_WITH_CORS && f.BUILD_WITH_REALIP && f.BUILD_WITH_SEARCH {
+	if f.BUILD_WITH_CORS && f.BUILD_WITH_REALIP && f.BUILD_WITH_WEBDAV {
 		// All ok.
 	} else {
 		if !f.BUILD_WITH_CORS {
@@ -46,8 +46,8 @@ func TestFlaggerParamsParsing(t *testing.T) {
 		if !f.BUILD_WITH_REALIP {
 			t.Fatal("BUILD_WITH_REALIP = false")
 		}
-		if !f.BUILD_WITH_SEARCH {
-			t.Fatal("BUILD_WITH_SEARCH = false")
+		if !f.BUILD_WITH_WEBDAV {
+			t.Fatal("BUILD_WITH_WEBDAV = false")
 		}
 		t.Fatal("testParamsParsing: Parameters parsing failed!")
 		t.FailNow()
