@@ -65,7 +65,7 @@ func (cp *CorsPlugin) Initialize() {
 	cp.pluginDescription = "cors gives you easy control over Cross Origin Resource Sharing for your site."
 	cp.sourcesUrl = "https://github.com/captncraig/cors"
 	cp.documentationUrl = "https://caddyserver.com/docs/cors"
-	cp.importLine = "github.com/captncraig/cors"
+	cp.importLine = "github.com/captncraig/cors/caddy"
 }
 
 // Installation

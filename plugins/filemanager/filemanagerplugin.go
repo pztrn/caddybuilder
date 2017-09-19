@@ -90,17 +90,43 @@ func (fp *FilemanagerPlugin) Install(workspace_path string) {
 		ctx.Log.Fatalf("Failed to get plugin's sources: %s", err1.Error())
 	}
 
-	// We have to run go generate.
-	os.Chdir(fmt.Sprintf("%s/src/%s", workspace_path, fp.GetPluginImportLine()))
-	err2 := ctx.CmdWorker.Execute("go generate")
-	if err2 != nil {
-		ctx.Log.Fatalf("Failed to run go generate: %s", err2.Error())
+	// For some reason one of dependencies didn't installed with previous
+	// command. Okay, will install it manually.
+	// Some explanations:
+	//   * "github.com/gorilla/websocket" - Caddy vendored it, so it's not
+	//     in GOPATH.
+	//   * "github.com/hacdias/varutils" - needed for Hugo plugin.
+	deps_to_install := []string{
+		"github.com/asdine/storm",
+		"github.com/dgrijalva/jwt-go",
+		"github.com/gorilla/websocket",
+		"github.com/hacdias/varutils",
+		"github.com/mholt/archiver",
+		"github.com/mitchellh/mapstructure",
+	}
+	for i := range deps_to_install {
+		err2 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", deps_to_install[i]))
+		if err2 != nil {
+			ctx.Log.Fatalf("Failed to get dependency for filemanager: %s", deps_to_install[i])
+		}
 	}
 
-	// Replace default "This is where other plugins get plugged in (imported)"
-	// line with plugin import.
-	replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", fp.GetPluginImportLine())
-	fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
+	// We have to run go generate.
+	os.Chdir(fmt.Sprintf("%s/src/%s", workspace_path, fp.GetPluginImportLine()))
+	err3 := ctx.CmdWorker.Execute("go generate")
+	if err3 != nil {
+		ctx.Log.Fatalf("Failed to run go generate: %s", err3.Error())
+	}
+
+	// Three plugins to install - filemanager, hugo, jekyll.
+	plugins_to_install := []string{"filemanager", "hugo", "jekyll"}
+	for i := range plugins_to_install {
+		// Replace default "This is where other plugins get plugged in (imported)"
+		// line with plugin import.
+		replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", fp.GetPluginImportLine() + "/caddy/" + plugins_to_install[i])
+		fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
+	}
+
 	// Write file.
 	ioutil.WriteFile(rungo, []byte(fh), os.ModePerm)
 }
