@@ -103,6 +103,7 @@ func (fp *FilemanagerPlugin) Install(workspace_path string) {
 		"github.com/hacdias/varutils",
 		"github.com/mholt/archiver",
 		"github.com/mitchellh/mapstructure",
+		"github.com/filebrowser/filebrowser",
 	}
 	for i := range deps_to_install {
 		err2 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", deps_to_install[i]))
@@ -123,7 +124,7 @@ func (fp *FilemanagerPlugin) Install(workspace_path string) {
 	for i := range plugins_to_install {
 		// Replace default "This is where other plugins get plugged in (imported)"
 		// line with plugin import.
-		replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", fp.GetPluginImportLine() + "/caddy/" + plugins_to_install[i])
+		replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", fp.GetPluginImportLine()+"/caddy/"+plugins_to_install[i])
 		fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
 	}
 

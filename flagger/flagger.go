@@ -58,36 +58,36 @@ Exitcodes:
 type Flagger struct {
 	// Build flags - with what plugins Caddybuilder will build Caddy.
 
-	BUILD_WITH_AUTHZ       bool
-	BUILD_WITH_AWSES       bool
-	BUILD_WITH_AWSLAMBDA   bool
-	BUILD_WITH_CACHE       bool
-	BUILD_WITH_CGI         bool
-	BUILD_WITH_CORS        bool
-	BUILD_WITH_DATADOG     bool
-	BUILD_WITH_EXPIRES     bool
-	BUILD_WITH_FILEMANAGER bool
-	BUILD_WITH_FILTER      bool
-	BUILD_WITH_FORWARDPROXY bool
-	BUILD_WITH_GIT         bool
-	BUILD_WITH_GOPKG       bool
-	BUILD_WITH_GRPC        bool
-	BUILD_WITH_HUGO        bool
-	BUILD_WITH_IPFILTER    bool
-	BUILD_WITH_JSONP       bool
-	BUILD_WITH_JWT         bool
-	BUILD_WITH_LOCALE      bool
-	BUILD_WITH_MAILOUT     bool
-	BUILD_WITH_MINIFY      bool
-	BUILD_WITH_NOBOTS      bool
-	BUILD_WITH_PROMETHEUS  bool
+	BUILD_WITH_AUTHZ         bool
+	BUILD_WITH_AWSES         bool
+	BUILD_WITH_AWSLAMBDA     bool
+	BUILD_WITH_CACHE         bool
+	BUILD_WITH_CGI           bool
+	BUILD_WITH_CORS          bool
+	BUILD_WITH_DATADOG       bool
+	BUILD_WITH_EXPIRES       bool
+	BUILD_WITH_FILEMANAGER   bool
+	BUILD_WITH_FILTER        bool
+	BUILD_WITH_FORWARDPROXY  bool
+	BUILD_WITH_GIT           bool
+	BUILD_WITH_GOPKG         bool
+	BUILD_WITH_GRPC          bool
+	BUILD_WITH_HUGO          bool
+	BUILD_WITH_IPFILTER      bool
+	BUILD_WITH_JSONP         bool
+	BUILD_WITH_JWT           bool
+	BUILD_WITH_LOCALE        bool
+	BUILD_WITH_MAILOUT       bool
+	BUILD_WITH_MINIFY        bool
+	BUILD_WITH_NOBOTS        bool
+	BUILD_WITH_PROMETHEUS    bool
 	BUILD_WITH_PROXYPROTOCOL bool
-	BUILD_WITH_RATELIMIT   bool
-	BUILD_WITH_REALIP      bool
-	BUILD_WITH_REAUTH      bool
-	BUILD_WITH_RESTIC      bool
-	BUILD_WITH_UPLOAD      bool
-	BUILD_WITH_WEBDAV      bool
+	BUILD_WITH_RATELIMIT     bool
+	BUILD_WITH_REALIP        bool
+	BUILD_WITH_REAUTH        bool
+	BUILD_WITH_RESTIC        bool
+	BUILD_WITH_UPLOAD        bool
+	BUILD_WITH_WEBDAV        bool
 
 	// Output - where binary will be placed.
 	BUILD_OUTPUT string
@@ -135,7 +135,7 @@ func (f *Flagger) Initialize() {
 	flag.BoolVar(&f.DO_NOT_REMOVE_CURRENT_GOPATH, "donotremovegopath", false, "Do not remove previously created GOPATH (improves speed)")
 
 	// Build output path.
-	flag.StringVar(&f.BUILD_OUTPUT, "output", "/usr/local/bin/", "Directory where resulting binary will be placed. It will be recreated if already exist.")
+	flag.StringVar(&f.BUILD_OUTPUT, "output", "/usr/local/bin/", "Resulted binary. It will be recreated if already exist.")
 
 	if len(os.Args) == 1 || os.Args[1] == "-h" {
 		flag.PrintDefaults()
