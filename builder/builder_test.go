@@ -105,7 +105,7 @@ func TestBuilderBuild(t *testing.T) {
 		t.Log("Building Caddy...")
 		b.Proceed()
 		// Get installed plugins list.
-		cmd := exec.Command("/tmp/caddybuilder-gopath/bin/caddy.test ", "-plugins")
+		cmd := exec.Command("/tmp/caddybuilder-gopath/bin/caddy.test", "-plugins")
 		stdout, _ := cmd.StdoutPipe()
 		stderr, _ := cmd.StderrPipe()
 		// Go, go, go!
@@ -114,11 +114,22 @@ func TestBuilderBuild(t *testing.T) {
 			t.Fatalf("Failed to check installed plugins: %s", err.Error())
 		}
 
-		stdout_output, _ := ioutil.ReadAll(stdout)
-		stderr_output, _ := ioutil.ReadAll(stderr)
-		// Wait until command finishes.
-		err1 := cmd.Wait()
+		stdout_output, err1 := ioutil.ReadAll(stdout)
+		stderr_output, err2 := ioutil.ReadAll(stderr)
+
 		if err1 != nil {
+			t.Fatalf("Failed to obtain stdout output!")
+			t.FailNow()
+		}
+
+		if err2 != nil {
+			t.Fatalf("Failed to obtain stderr output!")
+			t.FailNow()
+		}
+
+		// Wait until command finishes.
+		err3 := cmd.Wait()
+		if err3 != nil {
 			// This means that some error occured in run time.
 			t.Log("\tStdout:")
 			t.Log(string(stdout_output))
