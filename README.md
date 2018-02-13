@@ -10,6 +10,10 @@ custom feature set.
 After I wrote the very first version of Caddybuilder I found
 https://github.com/caddyserver/devportal, but it's not what I want.
 
+Repository on Github is a mirror. Real development is going at
+[pztrn's Sources](https://source.pztrn.name). Please, report bugs
+at [my JIRA](https://jira.pztrn.name/projects/CB/issues/).
+
 # Installing
 
 It is enough to do:
