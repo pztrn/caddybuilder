@@ -29,8 +29,8 @@ import (
 	"log"
 
 	// local
-	"github.com/pztrn/caddybuilder/cmdworker"
-	"github.com/pztrn/caddybuilder/flagger"
+	"lab.pztrn.name/pztrn/caddybuilder/cmdworker"
+	"lab.pztrn.name/pztrn/caddybuilder/flagger"
 )
 
 type PluginContext struct {

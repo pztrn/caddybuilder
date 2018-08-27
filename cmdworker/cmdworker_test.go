@@ -29,14 +29,14 @@ import (
 	"testing"
 
 	// local
-	"github.com/pztrn/caddybuilder/flagger"
-	"github.com/pztrn/caddybuilder/plugins"
+	"lab.pztrn.name/pztrn/caddybuilder/flagger"
+	//"lab.pztrn.name/pztrn/caddybuilder/plugins"
 )
 
 var (
 	c *CmdWorker
 	f *flagger.Flagger
-	p *plugins.Plugins
+	//p *plugins.Plugins
 )
 
 // Preparation for tests.

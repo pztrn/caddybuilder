@@ -25,7 +25,7 @@ package gopkg
 
 import (
 	// local
-	"github.com/pztrn/caddybuilder/plugins/context"
+	"lab.pztrn.name/pztrn/caddybuilder/plugins/context"
 )
 
 var (

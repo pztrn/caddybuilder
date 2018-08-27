@@ -36,7 +36,7 @@ var (
 	HELP_STRING = `Caddybuilder - a tool for building Caddy webserver binary with needed
 plugins.
 
-Copyright (c) 2017, Stanislav N. aka pztrn <pztrn at pztrn dot name>
+Copyright (c) 2017-2018, Stanislav N. aka pztrn <pztrn at pztrn dot name>
 
 Syntax:
 

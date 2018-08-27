@@ -11,15 +11,15 @@ After I wrote the very first version of Caddybuilder I found
 https://github.com/caddyserver/devportal, but it's not what I want.
 
 Repository on Github is a mirror. Real development is going at
-[pztrn's Sources](https://source.pztrn.name/projects/MISC/repos/caddybuilder/browse).
-Please, report bugs at [my JIRA](https://jira.pztrn.name/projects/CB/issues/).
+[pztrn's Lab](https://lab.pztrn.name/pztrn/caddybuilder).
+Please, report bugs there.
 
 # Installing
 
 It is enough to do:
 
 ```
-go get github.com/pztrn/caddybuilder
+go get lab.pztrn.name/pztrn/caddybuilder
 ```
 
 **ONLY NIX SYSTEMS ARE SUPPORTED FOR NOW!**
