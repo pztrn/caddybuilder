@@ -42,13 +42,16 @@ import (
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/filemanager"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/filter"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/forwardproxy"
+	"lab.pztrn.name/pztrn/caddybuilder/plugins/geoip"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/git"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/gopkg"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/grpc"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/ipfilter"
+	"lab.pztrn.name/pztrn/caddybuilder/plugins/jekyll"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/jsonp"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/jwt"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/locale"
+	"lab.pztrn.name/pztrn/caddybuilder/plugins/login"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/mailout"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/minify"
 	"lab.pztrn.name/pztrn/caddybuilder/plugins/nobots"
@@ -145,6 +148,11 @@ func (p *Plugins) initializePlugins() {
 	forwardproxy_interface.Initialize()
 	p.PluginsList[forwardproxy_interface.GetPluginName()] = forwardproxy_interface
 
+	geoip_raw := geoip.New(p.pluginContext)
+	geoip_interface := pluginhandler.PluginHandler(geoip_raw)
+	geoip_interface.Initialize()
+	p.PluginsList[geoip_interface.GetPluginName()] = geoip_interface
+
 	git_raw := git.New(p.pluginContext)
 	git_interface := pluginhandler.PluginHandler(git_raw)
 	git_interface.Initialize()
@@ -165,6 +173,11 @@ func (p *Plugins) initializePlugins() {
 	ipfilter_interface.Initialize()
 	p.PluginsList[ipfilter_interface.GetPluginName()] = ipfilter_interface
 
+	jekyll_raw := jekyll.New(p.pluginContext)
+	jekyll_interface := pluginhandler.PluginHandler(jekyll_raw)
+	jekyll_interface.Initialize()
+	p.PluginsList[jekyll_interface.GetPluginName()] = jekyll_interface
+
 	jsonp_raw := jsonp.New(p.pluginContext)
 	jsonp_interface := pluginhandler.PluginHandler(jsonp_raw)
 	jsonp_interface.Initialize()
@@ -179,6 +192,11 @@ func (p *Plugins) initializePlugins() {
 	locale_interface := pluginhandler.PluginHandler(locale_raw)
 	locale_interface.Initialize()
 	p.PluginsList[locale_interface.GetPluginName()] = locale_interface
+
+	login_raw := login.New(p.pluginContext)
+	login_interface := pluginhandler.PluginHandler(login_raw)
+	login_interface.Initialize()
+	p.PluginsList[login_interface.GetPluginName()] = login_interface
 
 	mailout_raw := mailout.New(p.pluginContext)
 	mailout_interface := pluginhandler.PluginHandler(mailout_raw)

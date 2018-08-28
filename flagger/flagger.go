@@ -76,14 +76,17 @@ type Flagger struct {
 	BUILD_WITH_FILEMANAGER   bool
 	BUILD_WITH_FILTER        bool
 	BUILD_WITH_FORWARDPROXY  bool
+	BUILD_WITH_GEOIP         bool
 	BUILD_WITH_GIT           bool
 	BUILD_WITH_GOPKG         bool
 	BUILD_WITH_GRPC          bool
 	BUILD_WITH_HUGO          bool
 	BUILD_WITH_IPFILTER      bool
+	BUILD_WITH_JEKYLL        bool
 	BUILD_WITH_JSONP         bool
 	BUILD_WITH_JWT           bool
 	BUILD_WITH_LOCALE        bool
+	BUILD_WITH_LOGIN         bool
 	BUILD_WITH_MAILOUT       bool
 	BUILD_WITH_MINIFY        bool
 	BUILD_WITH_NOBOTS        bool
@@ -120,13 +123,16 @@ func (f *Flagger) Initialize() {
 	flag.BoolVar(&f.BUILD_WITH_FILEMANAGER, "filemanager", false, "Build Caddy with FILEMANAGER plugin. Includes HUGO and JEKYLL.")
 	flag.BoolVar(&f.BUILD_WITH_FILTER, "filter", false, "Build Caddy with FILTER plugin")
 	flag.BoolVar(&f.BUILD_WITH_FORWARDPROXY, "forwardproxy", false, "Build Caddy with FORWARDPROXY plugin")
+	flag.BoolVar(&f.BUILD_WITH_GEOIP, "geoip", false, "Build Caddy with GEOIP plugin")
 	flag.BoolVar(&f.BUILD_WITH_GIT, "git", false, "Build Caddy with GIT plugin")
 	flag.BoolVar(&f.BUILD_WITH_GOPKG, "gopkg", false, "Build Caddy with GOPKG plugin")
 	flag.BoolVar(&f.BUILD_WITH_GRPC, "grpc", false, "Build Caddy with GRPC plugin")
 	flag.BoolVar(&f.BUILD_WITH_IPFILTER, "ipfilter", false, "Build Caddy with IPFILTER plugin")
+	flag.BoolVar(&f.BUILD_WITH_JEKYLL, "jekyll", false, "Build Caddy with JEKYLL plugin")
 	flag.BoolVar(&f.BUILD_WITH_JSONP, "jsonp", false, "Build Caddy with JSONP plugin")
 	flag.BoolVar(&f.BUILD_WITH_JWT, "jwt", false, "Build Caddy with JWT plugin")
 	flag.BoolVar(&f.BUILD_WITH_LOCALE, "locale", false, "Build Caddy with LOCALE plugin")
+	flag.BoolVar(&f.BUILD_WITH_LOGIN, "login", false, "Build Caddy with LOGIN plugin")
 	flag.BoolVar(&f.BUILD_WITH_MAILOUT, "mailout", false, "Build Caddy with MAILOUT plugin")
 	flag.BoolVar(&f.BUILD_WITH_MINIFY, "minify", false, "Build Caddy with MINIFY plugin")
 	flag.BoolVar(&f.BUILD_WITH_NOBOTS, "nobots", false, "Build Caddy with NOBOTS plugin")

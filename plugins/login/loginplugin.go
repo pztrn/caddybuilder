@@ -20,7 +20,7 @@
 // TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 // OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-package ipfilter
+package login
 
 import (
 	// stdlib
@@ -31,7 +31,7 @@ import (
 	"strings"
 )
 
-type IpfilterPlugin struct {
+type LoginPlugin struct {
 	documentationUrl  string
 	importLine        string
 	pluginDescription string
@@ -40,45 +40,45 @@ type IpfilterPlugin struct {
 }
 
 // Get plugin description. Short one :).
-func (ifp *IpfilterPlugin) GetPluginDescription() string {
-	return ifp.pluginDescription
+func (lp *LoginPlugin) GetPluginDescription() string {
+	return lp.pluginDescription
 }
 
 // Get plugin documentation URL.
-func (ifp *IpfilterPlugin) GetPluginDocumentationURL() string {
-	return ifp.documentationUrl
+func (lp *LoginPlugin) GetPluginDocumentationURL() string {
+	return lp.documentationUrl
 }
 
 // Get plugin's import line.
 // This line will be used to replace plugins initialization placehodler
 // in Caddy's run.go.
-func (ifp *IpfilterPlugin) GetPluginImportLine() string {
-	return ifp.importLine
+func (lp *LoginPlugin) GetPluginImportLine() string {
+	return lp.importLine
 }
 
 // Get plugin name.
-func (ifp *IpfilterPlugin) GetPluginName() string {
-	return ifp.pluginName
+func (lp *LoginPlugin) GetPluginName() string {
+	return lp.pluginName
 }
 
 // Get plugin's sources URL, for using with Builder.
-func (ifp *IpfilterPlugin) GetPluginSourcesURL() string {
-	return ifp.sourcesUrl
+func (lp *LoginPlugin) GetPluginSourcesURL() string {
+	return lp.sourcesUrl
 }
 
 // Plugin initialization.
-func (ifp *IpfilterPlugin) Initialize() {
-	ifp.pluginName = "ipfilter"
-	ifp.pluginDescription = "ipfilter blocks or allows requests based on the client's IP."
-	ifp.sourcesUrl = "https://github.com/pyed/ipfilter"
-	ifp.documentationUrl = "https://caddyserver.com/docs/http.ipfilter"
-	ifp.importLine = "github.com/pyed/ipfilter"
+func (lp *LoginPlugin) Initialize() {
+	lp.pluginName = "locale"
+	lp.pluginDescription = "based on github.com/tarent/loginsrv. The login is checked against a backend and then returned as JWT token. This directive is designed to play together with the http.jwt middleware."
+	lp.sourcesUrl = "https://github.com/tarent/loginsrv"
+	lp.documentationUrl = "https://caddyserver.com/docs/http.login"
+	lp.importLine = "github.com/tarent/loginsrv/caddy"
 }
 
 // Installation
-func (ifp *IpfilterPlugin) Install(workspace_path string) {
+func (lp *LoginPlugin) Install(workspace_path string) {
 	// Do nothing if user don't want to install this plugin.
-	if !ctx.Flags.BUILD_WITH_IPFILTER {
+	if !ctx.Flags.BUILD_WITH_LOGIN {
 		return
 	}
 	// Path to run.go.
@@ -90,16 +90,16 @@ func (ifp *IpfilterPlugin) Install(workspace_path string) {
 	}
 	fh := string(fh_bytes)
 
-	ctx.Log.Printf("Installing plugin: %s", ifp.GetPluginName())
+	ctx.Log.Printf("Installing plugin: %s", lp.GetPluginName())
 
-	err1 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", ifp.GetPluginImportLine()))
+	err1 := ctx.CmdWorker.Execute(fmt.Sprintf("go get -d -u %s", lp.GetPluginImportLine()))
 	if err1 != nil {
 		ctx.Log.Fatalf("Failed to get plugin's sources: %s", err1.Error())
 	}
 
 	// Replace default "This is where other plugins get plugged in (imported)"
 	// line with plugin import.
-	replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", ifp.GetPluginImportLine())
+	replace_to := fmt.Sprintf("_ \"%s\"\n\t// This is where other plugins get plugged in (imported)", lp.GetPluginImportLine())
 	fh = strings.Replace(fh, "// This is where other plugins get plugged in (imported)", replace_to, 1)
 	// Write file.
 	ioutil.WriteFile(rungo, []byte(fh), os.ModePerm)

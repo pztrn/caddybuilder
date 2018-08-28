@@ -10,6 +10,9 @@ custom feature set.
 After I wrote the very first version of Caddybuilder I found
 https://github.com/caddyserver/devportal, but it's not what I want.
 
+**Note:** there are some plugins that missing from official Caddy
+website. They might or might not work!
+
 Repository on Github is a mirror. Real development is going at
 [pztrn's Lab](https://lab.pztrn.name/pztrn/caddybuilder).
 Please, report bugs there.
